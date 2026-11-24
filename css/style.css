@@ -1,0 +1,195 @@
+/* ==========================================================================
+   DUŠAN MILOJEVIĆ — Busunternehmer
+   One page: header (wordmark), map, footer. Same skeleton and type as the
+   Milojević + Wilde site; system fonts only, no webfont import needed.
+   ========================================================================== */
+
+:root{
+  /* colour */
+  --bg-header: #FFFFFF;
+  --sky:       #F1F6FA;   /* very, very light sky blue for everything below the header */
+  --ink:       #1F170E;   /* same near-black as "Busunternehmer" */
+  --ink-soft:  #5E6670;
+  --red:       #A23425;   /* same red as the name */
+
+  --f-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --pad: clamp(20px, 5vw, 64px);
+  --header-h: clamp(68px, calc(3.4vw + 48px), 88px);
+  --fade-h: clamp(36px, 6vw, 72px);   /* how far the white header melts into the blue */
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html{ height: 100%; -webkit-text-size-adjust: 100%; background: var(--sky); }
+
+body{
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sky);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Fine, even grain over the sky blue. A tiny SVG noise tile, kept very
+   faint, so the colour reads as a soft paper-like texture rather than a
+   flat fill. Fixed, so it never scrolls or shimmers. */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .42  0 0 0 0 .52  0 0 0 .11 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
+}
+
+a{ color: inherit; text-decoration: none; }
+img{ max-width: 100%; display: block; }
+
+:focus-visible{ outline: 1.5px solid var(--ink); outline-offset: 3px; }
+
+.site-header, main, .site-footer{ position: relative; z-index: 1; }
+.site-header{ flex: none; }
+main{ flex: 1 0 auto; width: 100%; }
+.site-footer{ flex: none; }
+
+/* ==========================================================================
+   HEADER — pure white, no rule. Instead of the old hairline, the white
+   melts gradually into the grainy blue along its whole lower edge.
+   ========================================================================== */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  height: var(--header-h);
+  padding: 0 var(--pad);
+  background: var(--bg-header);
+}
+.site-header::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 100%;
+  height: var(--fade-h);
+  pointer-events: none;
+  /* many stops = a long, even, banding-free ease from white to clear */
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,1)    0%,
+    rgba(255,255,255,.86) 14%,
+    rgba(255,255,255,.68) 28%,
+    rgba(255,255,255,.49) 42%,
+    rgba(255,255,255,.32) 56%,
+    rgba(255,255,255,.18) 70%,
+    rgba(255,255,255,.08) 84%,
+    rgba(255,255,255,0)  100%);
+}
+
+.brand{ display: block; flex: 0 1 auto; min-width: 0; }
+.wordmark{
+  height: clamp(18px, 2.7vw, 34px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* ==========================================================================
+   MAP — sits straight on the page, no frame. Europe's coastline as a fine
+   line fading out toward the edges; Vienna in red, destinations in black.
+   ========================================================================== */
+.home-main{
+  position: relative;
+  min-height: 340px;
+}
+.map-wrap{
+  position: absolute;
+  inset: calc(var(--fade-h) * .5) var(--pad) clamp(12px, 3vh, 32px);
+}
+.map{
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.map .coast{
+  fill: none;
+  stroke: var(--ink);
+  stroke-opacity: .42;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(.45,0,.25,1);
+}
+.map .coast.is-on{ opacity: 1; }
+
+.map .route-dot{
+  fill: var(--ink);
+  fill-opacity: .55;
+  opacity: 0;
+}
+.map.animate .route-dot{
+  animation: dot-in .5s ease-out both;   /* delay set per dot in js/map.js */
+}
+.map.static .route-dot{ opacity: 1; }
+@keyframes dot-in{ from{ opacity: 0 } to{ opacity: 1 } }
+
+.map .dest{ fill: var(--ink); }
+.map .home{ fill: var(--red); }
+.map .home-ring{
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.map.animate .home-ring{ animation: ring 2.8s cubic-bezier(.2,.6,.3,1) .4s both; }
+@keyframes ring{
+  0%  { opacity: .7; transform: scale(1); }
+  100%{ opacity: 0;  transform: scale(4.5); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .map .coast{ transition: none; }
+  .map.animate .route-dot, .map.animate .home-ring{ animation: none; }
+  .map.animate .route-dot{ opacity: 1; }
+}
+
+/* ==========================================================================
+   FOOTER — no rule, sits on the blue
+   ========================================================================== */
+.site-footer{
+  padding: 22px var(--pad) 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+}
+.f-left{ display: flex; flex-wrap: wrap; gap: 18px; }
+.f-left a, .f-right{
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+}
+.f-left a:hover{ color: var(--ink); }
+
+@media (max-width: 560px){
+  :root{ --header-h: 64px; }
+}
