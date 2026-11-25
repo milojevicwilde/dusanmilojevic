@@ -17,9 +17,9 @@
   --f-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   --pad: clamp(16px, 4.5vw, 64px);
-  --brand-h: clamp(44px, calc(1.8vw + 34px), 64px);
+  --brand-h: clamp(48px, calc(2vw + 37px), 70px);
   --header-h: calc(var(--brand-h) + clamp(24px, 2.4vw, 38px));
-  --text-x: calc(var(--pad) + var(--brand-h) * 1.209);   /* where the header lettering starts */
+  --text-x: calc(var(--pad) + var(--brand-h) * 1.2138);   /* where the header lettering starts */
   --bleed-h: clamp(64px, 12vh, 140px);
   --footer-h: 54px;
   --swipe: 620ms;
@@ -205,7 +205,7 @@ img{ display: block; max-width: 100%; }
   padding: 10px 18px;
   color: var(--red);
   font-weight: 700;
-  font-size: clamp(14px, calc(.35vw + 12px), 17px);
+  font-size: clamp(15.5px, calc(.4vw + 13.5px), 19px);
   line-height: 1;
   letter-spacing: .26em;
   text-transform: uppercase;
@@ -232,11 +232,11 @@ img{ display: block; max-width: 100%; }
 
 /* ==========================================================================
    PAGE 2 — Anfragen
-   Desktop:  [ask text      ] [photo  ]
-             ---- rule ----   [caption]
-             [email  phone  ] [text   ]
-   The rule sits at the height of the photo's lower edge and runs from the
-   start of the header lettering to just short of the photo.
+   Desktop:  [ask text             ] [photo  ] [text]
+             ------- rule -------    [caption]
+             [email      phone     ]
+   The rule sits at the height of the photo's lower edge, from the start of
+   the header lettering to just short of the photo. The photo is never cropped.
    ========================================================================== */
 .page-contact{
   display: flex;
@@ -246,29 +246,23 @@ img{ display: block; max-width: 100%; }
     calc(var(--footer-h) + clamp(14px, 4vh, 44px));
 }
 .contact-grid{
-  --pw: clamp(240px, min(28vw, 42vh), 430px);   /* photo size */
+  --pw: clamp(190px, min(19vw, 40vh), 340px);   /* photo width (2:3, uncropped) */
+  --tw: clamp(240px, 22vw, 360px);              /* text column beside the photo */
   --s:  clamp(20px, 2.3vw, 34px);               /* one spacing for rule, text and photo */
   --fs: clamp(15px, calc(.25vw + 12.5px), 16.5px);
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--pw);
-  grid-template-rows: auto auto 1fr;
+  grid-template-columns: minmax(0, 1fr) var(--pw) var(--tw);
+  grid-template-rows: auto 1fr;
   grid-template-areas:
-    "ask   photo"
-    "lines name"
-    "lines text";
+    "ask   photo text"
+    "lines name  text";
   column-gap: var(--s);
   font-size: var(--fs);
   line-height: 1.62;
 }
 .c-photo{ grid-area: photo; display: block; }
-.c-photo img{
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  height: auto;
-  object-fit: cover;
-  background: #c3d8e8;
-}
+.c-photo img{ width: 100%; height: auto; background: #c3d8e8; }
 .c-name{
   grid-area: name;
   margin: 10px 0 0;
@@ -279,20 +273,21 @@ img{ display: block; max-width: 100%; }
 }
 .c-text{
   grid-area: text;
-  margin: 12px 0 0;
+  align-self: start;
+  margin: -.32em 0 0;                 /* first line's cap height level with the photo top */
   color: var(--ink-2);
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+  text-wrap: pretty;                  /* even rag, no lonely last word */
 }
 .c-ask{
   grid-area: ask;
   align-self: end;
   margin: 0;
   padding-bottom: var(--s);
-  max-width: 32em;
   color: var(--ink-2);
-  text-transform: uppercase;
-  letter-spacing: .05em;
+  font-weight: 600;
+  text-wrap: balance;
 }
 .c-lines{
   grid-area: lines;
@@ -302,13 +297,12 @@ img{ display: block; max-width: 100%; }
   border-top: 1px solid var(--rule);
   display: flex;
   flex-wrap: wrap;
-  gap: .4em 2.6em;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  font-weight: 500;
+  gap: .35em 2.4em;
+  font-weight: 600;
 }
 .c-lines a{
   color: var(--red);
+  white-space: nowrap;
   background-image: linear-gradient(var(--red), var(--red));
   background-size: 0 1px;
   background-repeat: no-repeat;
@@ -320,7 +314,7 @@ img{ display: block; max-width: 100%; }
 
 /* short desktop screens */
 @media (min-width: 761px) and (min-aspect-ratio: 4/5) and (max-height: 800px){
-  .contact-grid{ --pw: clamp(220px, min(28vw, 39vh), 360px); --fs: 14.5px; line-height: 1.55; }
+  .contact-grid{ --fs: 14.5px; line-height: 1.55; }
   .page-contact{ padding-top: calc(var(--header-h) + 22px); padding-bottom: calc(var(--footer-h) + 12px); }
 }
 
@@ -329,11 +323,11 @@ img{ display: block; max-width: 100%; }
   :root{ --footer-h: 48px; --bleed-h: 60px; --text-x: var(--pad); }
   .site-footer{ font-size: .66rem; letter-spacing: .06em; }
   .page-contact{
-    padding-top: calc(var(--header-h) + clamp(16px, 4vh, 48px));
+    padding-top: calc(var(--header-h) + clamp(14px, 4vh, 48px));
     padding-bottom: calc(var(--footer-h) + clamp(10px, 2.5vh, 32px));
   }
   .contact-grid{
-    --pw: min(40vw, 24vh, 320px);
+    --pw: min(38vw, 22vh, 300px);
     --s:  clamp(16px, 2.6vh, 30px);
     --fs: clamp(13px, calc(1vw + 9.2px), 17px);
     grid-template-columns: var(--pw) minmax(0, 1fr);
@@ -346,15 +340,9 @@ img{ display: block; max-width: 100%; }
     column-gap: clamp(14px, 4vw, 28px);
     line-height: 1.5;
   }
-  .c-photo img{ aspect-ratio: 4 / 5; }
   .c-name{ margin-top: 7px; font-size: .68rem; }
-  .c-text{ margin: -.3em 0 0; align-self: start; hyphenate-limit-chars: 10 4 4; -webkit-hyphenate-limit-before: 4; -webkit-hyphenate-limit-after: 4; }
-  .c-ask{ margin-top: clamp(22px, 4vh, 44px); max-width: none; letter-spacing: .04em; }
-  /* email and number side by side on one line, sized to the screen width */
-  .c-lines{
-    font-size: min(var(--fs), calc((100vw - 2 * var(--pad)) / 27.5));
-    gap: .35em 1.5em; letter-spacing: .02em;
-  }
+  .c-ask{ margin-top: clamp(20px, 3.5vh, 44px); }
+  .c-lines{ gap: .35em 1.6em; }
 }
 @media (max-width: 360px){
   .site-footer{ font-size: .6rem; letter-spacing: .04em; }
