@@ -6,22 +6,23 @@ or Cloudflare Pages (Framework: None, build command empty, output directory `/`)
 
 ```
 index.html                 Both pages (map + Anfragen), fixed header and footer
-css/style.css              All styling; colours at the top (--sky, --paper, --red, --ink)
-js/map.js                  Map: coastline, road-following routes, intro animation
-js/site.js                 Header/footer/ANFRAGEN timing, page swipe
+css/style.css              All styling; colours and swipe speed (--swipe) at the top
+js/map.js                  Map: coastline, road-following routes, intro animation + reveal
+js/site.js                 Page swipe (wheel, touch, keys, ANFRAGEN link – all same speed)
 images/brand.svg           Header: logo + "Dušan Milojević / Busunternehmer" block
-images/name.svg            Name lettering (caption under the photo)
 images/logo.svg            Logo on its own
 images/favicon.svg, apple-touch-icon.png
-images/dusan-milojevic-*.jpg / .webp   Portrait in two sizes
+images/dusan-milojevic-sq-*    Portrait, square (desktop)
+images/dusan-milojevic-45-*    Portrait, 4:5 (phones)
 ```
 
 ## Editing
 - **Destinations / roads:** in `js/map.js`, `P` holds the waypoints (longitude, latitude), `ROUTES`
   lists the roads from Vienna, `DEST` names the end points. Branches start from any node already
   on a road, e.g. `['graz','wildon', … ,'umag']`.
-- **Intro timing:** `T` at the top of `js/map.js`, and the two timeouts in `js/site.js`
-  (header/footer at 2.9 s, ANFRAGEN at 3.15 s).
+- **Intro timing:** `T` at the top of `js/map.js` (`chrome` = when header, footer and ANFRAGEN
+  fade in together; currently 3.4 s, finished by ~4.5 s).
+- **Swipe speed:** `--swipe` in `css/style.css` (620ms).
 - **Texts, e-mail, phone:** `index.html`.
 
 The coastline is Natural Earth data (public domain), loaded from the jsDelivr CDN and cached in the

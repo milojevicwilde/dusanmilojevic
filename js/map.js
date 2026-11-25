@@ -23,11 +23,12 @@
 
   // ---- timeline (ms from start) ------------------------------------------
   var T = {
-    home:    60,     // Vienna pops
-    start:   380,    // routes leave Vienna
-    travel:  2600,   // time for the longest route  -> arrives ~2980
-    coastIn: 380,    // coastline starts fading in
-    wien:    2750    // "Wien" label
+    home:    80,     // Vienna pops
+    start:   450,    // routes leave Vienna
+    travel:  2950,   // time for the longest route  -> arrives ~3400
+    coastIn: 450,    // coastline starts fading in
+    wien:    3150,   // "Wien" label
+    chrome:  3400    // header, footer and ANFRAGEN fade in together (done ~4.5 s)
   };
   var DOT_FADE = 150, POP = 420;
 
@@ -84,8 +85,8 @@
     jastreb: [15.72, 45.66], karlovac: [15.55, 45.49], tusilovic: [15.58, 45.31], slunj: [15.59, 45.12],
     rakovica: [15.63, 45.00], plitvice: [15.62, 44.88],
     // A4 east
-    schwechat: [16.50, 48.12], bruck: [16.78, 48.02], nickelsdorf: [17.07, 47.94], mosonm: [17.27, 47.86],
-    gyor: [17.63, 47.67], tatabanya: [18.40, 47.58], budapest: [19.04, 47.50],
+    ebreichsdorf: [16.40, 47.96], eisenstadt: [16.52, 47.84], klingenbach: [16.54, 47.75], sopron: [16.60, 47.68],
+    kapuvar: [17.03, 47.60], gyor: [17.63, 47.67], tatabanya: [18.40, 47.58], budapest: [19.04, 47.50],
     // A5 north, D1, D8, A13, A24
     wolkersdorf: [16.52, 48.38], poysdorf: [16.63, 48.67], mikulov: [16.64, 48.81], brno: [16.58, 49.15],
     velkemez: [16.02, 49.35], jihlava: [15.60, 49.42], humpolec: [15.36, 49.54], praha: [14.50, 50.03],
@@ -103,7 +104,6 @@
   var ROUTES = [
     ['wien','wolkersdorf','poysdorf','mikulov','brno','velkemez','jihlava','humpolec','praha','prahan','lovosice','usti','petrovice','drnord','thiendorf','ruhland','calau','spreewald','luckau','schoenefeld','ludwigsfelde','michendorf','werder','havelland','neuruppin','wittstock','putlitz','ludwigslust','wittenburg','schwarzenbek','hamburg'],
     ['drnord','a4ost','bautzen'],
-    ['wien','schwechat','bruck','nickelsdorf','mosonm','gyor','tatabanya','budapest'],
     ['wien','a1a','a1b','stpoelten','melk','ybbs','amstetten','enns','linz','wels','seewalchen','mondsee','salzburg','traunstein','rosenheim','holzkirchen','muenchen','augsburg','guenzburg','ulm','merklingen','kirchheim','stuttgart','leonberg','pforzheim','karlsruhe','rastatt','badenbaden','offenburg','lahr','riegel','fbnord','breisach','colmar'],
     ['fbnord','freiburg'],
     ['wels','ried','suben','passau','deggendorf','straubing','regensburg','parsberg','nuernberg','hoechstadt','wuerzburg','marktheid','aschaffenburg','frankfurt','wiesbaden','idstein','selters'],
@@ -114,6 +114,7 @@
     ['rovereto','garda'],
     ['wien','voesendorf','baden','wrneustadt','seebenstein','grimmenstein','aspang','wechsel','hartberg','ilz','gleisdorf','graz','pack','wolfsberg','voelkermarkt','klagenfurt','velden','villach','arnoldstein','tarvisio','chiusaforte','gemona','udine','palmanova','portogruaro','sandona','mestre','venedig'],
     ['grimmenstein','stcorona'],
+    ['voesendorf','ebreichsdorf','eisenstadt','klingenbach','sopron','kapuvar','gyor','tatabanya','budapest'],
     ['ilz','fuerstenfeld','jennersdorf','goricko','msobota','beltinci','lendava'],
     ['graz','wildon','spielfeld','maribor','konjice','celje','trojane','ljubljana','vrhnika','postojna','kozina','koper','dragonja','umag'],
     ['maribor','ptuj','macelj','zabok','zagreb','jastreb','karlovac','tusilovic','slunj','rakovica','plitvice']
@@ -190,7 +191,7 @@
     var top = hb + bleed * 0.62, bottom = cb - (small ? 8 : 14);
     var sw = W - 2 * padX - 2 * sz.margin, sh = bottom - top - 2 * sz.margin;
     var bw = bb[2] - bb[0], bh = bb[3] - bb[1];
-    var k = Math.min(sw / bw, sh / bh);
+    var k = Math.min(sw / bw, sh / bh) * 0.86;   // a little more of Europe around the routes
     view = {
       k: k,
       ox: W / 2 - (bb[0] + bw / 2) * k,
@@ -274,10 +275,10 @@
     }
     dots = kept;
 
-    // "Wien" label: to the right of the dot, nudged up into the free gap
-    // between the road north (Brno) and the road east (Budapest).
-    wienEl.style.transform = 'translate(' + (home[0] + sz.home + 6).toFixed(1) + 'px,' +
-                             (home[1] - sz.home - 6).toFixed(1) + 'px)';
+    // "Wien": directly to the right of the dot, centred on its horizon
+    // (all roads leave Vienna to the north, west and south).
+    wienEl.style.transform = 'translate(' + (home[0] + sz.home + 7).toFixed(1) + 'px,' +
+                             home[1].toFixed(1) + 'px) translateY(-46%)';
   }
 
   // ---- timing: one wave front, same pace on every route ---------------------
@@ -434,6 +435,7 @@
     var now = ts - t0;
     drawRoutes(now);
     if (now >= T.wien) wienEl.classList.add('is-on');
+    if (now >= T.chrome) document.documentElement.classList.add('chrome-in');
     if (now < END) requestAnimationFrame(frame);
     else done = true;
   }
@@ -443,6 +445,7 @@
   if (reduce) {
     done = true; t0 = 0;
     drawRoutes(1e9); wienEl.classList.add('is-on');
+    document.documentElement.classList.add('chrome-in');
   } else {
     requestAnimationFrame(frame);
   }

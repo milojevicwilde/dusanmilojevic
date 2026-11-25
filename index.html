@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dušan Milojević — Busunternehmer, Wien</title>
-<meta name="description" content="Dušan Milojević, Busunternehmer in Wien. Eigene moderne Fahrzeuge für 20 bis 59 Fahrgäste – für Reisen innerhalb Österreichs und ins Ausland.">
+<meta name="description" content="Dušan Milojević, Busunternehmer in Wien. Eigene moderne Fahrzeuge für 20 bis 59 Fahrgäste – für Tagesausflüge, Klassenfahrten und Fernreisen, in Österreich und ins Ausland.">
 <meta property="og:site_name" content="Dušan Milojević">
 <meta property="og:title" content="Dušan Milojević — Busunternehmer, Wien">
 <meta property="og:description" content="Eigene moderne Fahrzeuge für 20 bis 59 Fahrgäste – für Reisen innerhalb Österreichs und ins Ausland.">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2/land-50m.json" as="fetch" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 <script>
   // Mark JS as available before first paint, so the intro can start hidden.
   document.documentElement.className = 'js' +
@@ -25,11 +25,11 @@
 
 <header class="site-header">
   <a class="brand" href="#start" aria-label="Dušan Milojević, Busunternehmer – zum Anfang">
-    <img src="images/brand.svg" alt="Dušan Milojević Busunternehmer" width="861" height="123">
+    <img src="images/brand.svg" alt="Dušan Milojević Busunternehmer" width="882" height="139">
   </a>
 </header>
 
-<main>
+<main class="pages">
   <!-- Page 1: map -->
   <section id="start" class="page page-map" aria-label="Reiseziele ab Wien">
     <canvas class="map-coast" aria-hidden="true"></canvas>
@@ -43,34 +43,28 @@
   </section>
 
   <!-- Page 2: contact -->
-  <section id="anfragen" class="page page-contact" aria-labelledby="anfragen-title">
+  <section id="anfragen" class="page page-contact" aria-label="Anfragen">
     <div class="contact-grid">
-      <div class="contact">
-        <h2 id="anfragen-title" class="eyebrow">Anfragen</h2>
-        <p class="lead">Für Anfragen, Buchungen und Informationen erreichen Sie uns unter</p>
-        <p class="lines">
-          <a href="mailto:info@dusanmilojevic.com">info@dusanmilojevic.com</a>
-          <a href="tel:+4366473457038">+43 664 73457038</a>
-        </p>
-      </div>
-
-      <figure class="portrait">
-        <picture>
-          <source type="image/webp" srcset="images/dusan-milojevic-600.webp 600w, images/dusan-milojevic-1000.webp 1000w"
-                  sizes="(max-width: 760px) 62vw, 340px">
-          <img src="images/dusan-milojevic-600.jpg"
-               srcset="images/dusan-milojevic-600.jpg 600w, images/dusan-milojevic-1000.jpg 1000w"
-               sizes="(max-width: 760px) 62vw, 340px"
-               width="600" height="750" loading="lazy" decoding="async"
-               alt="Dušan Milojević vor einer Flussschlucht">
-        </picture>
-        <figcaption>
-          <img class="portrait-name" src="images/name.svg" alt="Dušan Milojević" width="713" height="96">
-          <p>Wir verfügen über eigene, moderne Fahrzeuge und vermitteln darüber hinaus Fahrer sowie
-             weitere Busse – für Reisen innerhalb Österreichs ebenso wie ins Ausland. Unsere Fahrzeuge
-             bieten Platz für 20 bis 59 Fahrgäste.</p>
-        </figcaption>
-      </figure>
+      <picture class="c-photo">
+        <source media="(max-width: 760px), (max-aspect-ratio: 4/5)" type="image/webp"
+                srcset="images/dusan-milojevic-45-480.webp 480w, images/dusan-milojevic-45-720.webp 720w" sizes="42vw">
+        <source media="(max-width: 760px), (max-aspect-ratio: 4/5)"
+                srcset="images/dusan-milojevic-45-480.jpg 480w, images/dusan-milojevic-45-720.jpg 720w" sizes="42vw">
+        <source type="image/webp"
+                srcset="images/dusan-milojevic-sq-600.webp 600w, images/dusan-milojevic-sq-900.webp 900w" sizes="430px">
+        <img src="images/dusan-milojevic-sq-600.jpg"
+             srcset="images/dusan-milojevic-sq-600.jpg 600w, images/dusan-milojevic-sq-900.jpg 900w" sizes="430px"
+             width="600" height="600" decoding="async" alt="Dušan Milojević vor einer Flussschlucht">
+      </picture>
+      <p class="c-name">Dušan Milojević</p>
+      <p class="c-text">Wir verfügen über eigene, moderne Fahrzeuge und vermitteln darüber hinaus Fahrer sowie
+        weitere Busse – für Reisen innerhalb Österreichs ebenso wie ins Ausland. Unsere Fahrzeuge bieten
+        Platz für 20 bis 59 Fahrgäste und Komfort für jede Strecke – ob Tagesausflug, Klassenfahrt oder Fernreise.</p>
+      <p class="c-ask">Für Anfragen, Buchungen und Informationen erreichen Sie uns unter:</p>
+      <p class="c-lines">
+        <a href="mailto:info@dusanmilojevic.com">info@dusanmilojevic.com</a>
+        <a href="tel:+4366473457038">+43 664 73457038</a>
+      </p>
     </div>
   </section>
 </main>
@@ -80,7 +74,7 @@
   <span>Wien, Österreich</span>
 </footer>
 
-<script src="js/map.js?v=2" defer></script>
-<script src="js/site.js?v=2" defer></script>
+<script src="js/map.js?v=3" defer></script>
+<script src="js/site.js?v=3" defer></script>
 </body>
 </html>
