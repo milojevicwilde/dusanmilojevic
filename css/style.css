@@ -277,18 +277,21 @@ img{ display: block; max-width: 100%; }
 }
 .c-quote svg{
   display: block;
-  width: calc(var(--fs) * 25);        /* 400 units at 16 units per text size */
   max-width: 100%;
   height: auto;
   overflow: visible;
 }
+.c-quote .q-wide{ width: calc(var(--fs) * 32.5); }   /* 520 units, 16 units = text size */
+.c-quote .q-narrow{ display: none; width: calc(var(--fs) * 25); }
 .c-quote text{
   font-family: var(--f-body);
   font-size: 16px;
   font-weight: 300;
-  letter-spacing: 1.3px;
   fill: var(--ink-soft);
 }
+.c-quote .q-wide .q-main{ letter-spacing: 3px; }
+.c-quote .q-narrow .q-main{ letter-spacing: 1.4px; }
+.c-quote .q-by{ letter-spacing: .6px; }
 
 .c-photo{ grid-area: photo; display: block; }
 .c-photo img{
@@ -374,6 +377,7 @@ img{ display: block; max-width: 100%; }
   :root{ --footer-h: 48px; --bleed-h: 60px; --text-x: var(--pad); }
   .site-footer{ font-size: .66rem; letter-spacing: .06em; }
   .page-contact{
+    align-items: flex-start;           /* quote sits high, just under the header fade */
     padding-top: calc(var(--header-h) + var(--bleed-h) * .7 + clamp(0px, 1vh, 16px));
     padding-bottom: calc(var(--footer-h) + clamp(8px, 1.6vh, 24px));
   }
@@ -390,23 +394,24 @@ img{ display: block; max-width: 100%; }
       "name  ."
       "ask   ask"
       "lines lines";
-    column-gap: clamp(14px, 4vw, 28px);
+    --cg: clamp(14px, 4vw, 28px);
+    column-gap: var(--cg);
   }
-  .c-quote{ margin: 0 0 clamp(14px, 2.6vh, 32px); }
+  .c-quote{ margin: -6px 0 clamp(16px, 3.6vh, 40px); }
+  .c-quote .q-wide{ display: none; }
+  .c-quote .q-narrow{ display: block; }
   .c-name{ margin-top: 7px; font-size: .68rem; }
   .c-text{ margin: -.28em 0 0; }
-  .c-ask{ margin-top: clamp(24px, 4.5vh, 60px); padding-bottom: calc(var(--s) * .9); }
+  .c-ask{ margin-top: clamp(24px, 5.5vh, 64px); padding-bottom: calc(var(--s) * .9); }
   .c-label{ font-size: .66rem; }
-  .c-item{ padding: calc(var(--s) * .6) 0; }
-  /* compact (set by JS on short phones): both contacts side by side */
-  .contact-grid.is-compact .c-lines{
+  /* E-mail under the photo, Telefon lined up with the text beside it */
+  .c-lines{
     display: grid;
-    grid-template-columns: auto auto;
-    justify-content: start;
-    column-gap: 2.4em;
+    grid-template-columns: var(--pw) minmax(0, 1fr);
+    column-gap: var(--cg);
     border-bottom: 1px solid var(--rule);
   }
-  .contact-grid.is-compact .c-item{ border-bottom: 0; }
+  .c-item{ padding: calc(var(--s) * .7) 0; border-bottom: 0; min-width: 0; }
 }
 @media (max-width: 360px){
   .site-footer{ font-size: .6rem; letter-spacing: .04em; }

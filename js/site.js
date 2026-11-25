@@ -128,9 +128,6 @@
       setVar('--lh', Math.max(1.5, lh).toFixed(3));
     }
     layoutMobile(pwMin);
-    if (fits()) return;
-    grid.classList.add('is-compact');
-    layoutMobile(pwMin);
     while (!fits() && fs > 12) {           // smaller text first …
       fs -= 0.5; setVar('--fs', fs + 'px'); layoutMobile(pwMin);
     }

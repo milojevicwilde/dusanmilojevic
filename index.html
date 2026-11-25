@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2/land-50m.json" as="fetch" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=6">
+<link rel="stylesheet" href="css/style.css?v=7">
 <script>
   // Mark JS as available before first paint, so the intro can start hidden.
   document.documentElement.className = 'js' +
@@ -25,7 +25,7 @@
 
 <header class="site-header">
   <a class="brand" href="#start" aria-label="Dušan Milojević, Busunternehmer – zum Anfang">
-    <img src="images/brand.svg?v=6" alt="Dušan Milojević Busunternehmer" width="899" height="153">
+    <img src="images/brand.svg?v=7" alt="Dušan Milojević Busunternehmer" width="899" height="153">
   </a>
 </header>
 
@@ -45,12 +45,20 @@
   <!-- Page 2: contact -->
   <section id="anfragen" class="page page-contact" aria-label="Anfragen">
     <div class="contact-grid">
-      <figure class="c-quote" aria-label="„Leben und leben lassen“ – Friedrich Schiller">
-        <svg viewBox="0 0 400 66" aria-hidden="true">
-          <path id="wave-a" d="M2 24 C 62 12 122 12 182 24 S 302 36 362 24" fill="none"/>
-          <path id="wave-b" d="M118 54 C 168 44 218 44 268 54 S 368 64 398 54" fill="none"/>
-          <text><textPath href="#wave-a">LEBEN UND LEBEN LASSEN</textPath></text>
-          <text><textPath href="#wave-b" startOffset="100%" text-anchor="end">– FRIEDRICH SCHILLER</textPath></text>
+      <figure class="c-quote" aria-label="„Leben und leben lassen.“ – Friedrich Schiller">
+        <!-- desktop: wider, tilted waves -->
+        <svg class="q-wide" viewBox="0 0 520 104" aria-hidden="true">
+          <path id="qw-a" d="M4 60 C 90 32 170 30 250 44 S 410 52 504 18" fill="none"/>
+          <path id="qw-b" d="M196 100 C 266 80 336 76 406 86 S 490 84 518 66" fill="none"/>
+          <text class="q-main"><textPath href="#qw-a">„LEBEN UND LEBEN LASSEN.“</textPath></text>
+          <text class="q-by"><textPath href="#qw-b" startOffset="100%" text-anchor="end">– Friedrich Schiller</textPath></text>
+        </svg>
+        <!-- phones: compact waves -->
+        <svg class="q-narrow" viewBox="0 0 400 74" aria-hidden="true">
+          <path id="qn-a" d="M2 22 C 62 10 122 10 182 22 S 302 34 362 22" fill="none"/>
+          <path id="qn-b" d="M150 64 C 196 54 242 54 288 62 S 372 70 398 60" fill="none"/>
+          <text class="q-main"><textPath href="#qn-a">„LEBEN UND LEBEN LASSEN.“</textPath></text>
+          <text class="q-by"><textPath href="#qn-b" startOffset="100%" text-anchor="end">– Friedrich Schiller</textPath></text>
         </svg>
       </figure>
 
@@ -60,10 +68,10 @@
         <source media="(max-width: 760px), (max-aspect-ratio: 4/5)"
                 srcset="images/dusan-milojevic-500.jpg 500w, images/dusan-milojevic-900.jpg 900w" sizes="50vw">
         <source type="image/webp"
-                srcset="images/dusan-milojevic-sq-600.webp 600w, images/dusan-milojevic-sq-900.webp 900w, images/dusan-milojevic-sq-1200.webp 1200w"
+                srcset="images/dusan-milojevic-square-600.webp 600w, images/dusan-milojevic-square-900.webp 900w, images/dusan-milojevic-square-1200.webp 1200w"
                 sizes="440px">
-        <img src="images/dusan-milojevic-sq-600.jpg"
-             srcset="images/dusan-milojevic-sq-600.jpg 600w, images/dusan-milojevic-sq-900.jpg 900w, images/dusan-milojevic-sq-1200.jpg 1200w"
+        <img src="images/dusan-milojevic-square-600.jpg"
+             srcset="images/dusan-milojevic-square-600.jpg 600w, images/dusan-milojevic-square-900.jpg 900w, images/dusan-milojevic-square-1200.jpg 1200w"
              sizes="440px" width="600" height="600" decoding="async"
              alt="Dušan Milojević vor einer Flussschlucht">
       </picture>
@@ -85,7 +93,7 @@
   <span>Wien, Österreich</span>
 </footer>
 
-<script src="js/map.js?v=6" defer></script>
-<script src="js/site.js?v=6" defer></script>
+<script src="js/map.js?v=7" defer></script>
+<script src="js/site.js?v=7" defer></script>
 </body>
 </html>
