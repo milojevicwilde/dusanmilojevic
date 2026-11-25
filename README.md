@@ -11,7 +11,9 @@ js/map.js                  Map: coastline, road-following routes, intro animatio
 js/site.js                 Page swipe (wheel, touch, keys, ANFRAGEN link – all same speed)
 images/brand.svg           Header: logo + "Dušan Milojević / Busunternehmer" block
 images/logo.svg            Logo on its own
-images/favicon.svg, apple-touch-icon.png
+favicon.ico, images/favicon.svg, favicon-48/96/192/512.png, apple-touch-icon.png
+images/share.jpg           Link preview image (logo + name), 1200×630
+images/logo-512.png        Logo for search engines
 images/dusan-milojevic-square-*  Portrait, square crop (desktop)
 images/dusan-milojevic-500/900  Portrait, full 2:3 photo (phones)
 ```
@@ -27,3 +29,9 @@ images/dusan-milojevic-500/900  Portrait, full 2:3 photo (phones)
 
 The coastline is Natural Earth data (public domain), loaded from the jsDelivr CDN and cached in the
 visitor's browser after the first visit.
+
+## Link previews and Google
+- The page uses `https://www.dusanmilojevic.com/` for its link-preview image and canonical address. If the
+  site lives at another address, change those URLs at the top of `index.html`.
+- On GitHub Pages, tick **Enforce HTTPS** so the preview image loads.
+- Google Search Console → URL Inspection → *Request indexing* speeds up the new icon in search results.
