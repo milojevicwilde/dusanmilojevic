@@ -1,195 +1,363 @@
 /* ==========================================================================
    DUŠAN MILOJEVIĆ — Busunternehmer
-   One page: header (wordmark), map, footer. Same skeleton and type as the
-   Milojević + Wilde site; system fonts only, no webfont import needed.
+   Two pages that snap: (1) the map, (2) Anfragen. Header and footer stay
+   fixed. System fonts only.
    ========================================================================== */
 
 :root{
-  /* colour */
-  --bg-header: #FFFFFF;
-  --sky:       #F1F6FA;   /* very, very light sky blue for everything below the header */
-  --ink:       #1F170E;   /* same near-black as "Busunternehmer" */
-  --ink-soft:  #5E6670;
-  --red:       #A23425;   /* same red as the name */
+  --paper:   #FBFAF6;   /* off-white header */
+  --sky:     #D3E8F8;   /* light, bright sky blue for the page */
+  --ink:     #1F170E;   /* near-black, same as "Busunternehmer" */
+  --ink-2:   #3A332B;   /* body text on page two */
+  --ink-soft:#5A6470;   /* footer */
+  --red:     #A23425;   /* name, Vienna dot, ANFRAGEN */
 
   --f-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-  --pad: clamp(20px, 5vw, 64px);
-  --header-h: clamp(68px, calc(3.4vw + 48px), 88px);
-  --fade-h: clamp(36px, 6vw, 72px);   /* how far the white header melts into the blue */
+  --pad: clamp(16px, 4.5vw, 64px);
+  --brand-h: clamp(38px, calc(1.6vw + 30px), 56px);
+  --header-h: calc(var(--brand-h) + clamp(24px, 2.6vw, 40px));
+  --bleed-h: clamp(64px, 12vh, 140px);
+  --footer-h: 54px;
 }
 
 *, *::before, *::after{ box-sizing: border-box; }
-html{ height: 100%; -webkit-text-size-adjust: 100%; background: var(--sky); }
 
+html{
+  background: var(--sky);
+  -webkit-text-size-adjust: 100%;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
 body{
   margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
   background: var(--sky);
   color: var(--ink);
   font-family: var(--f-body);
   font-weight: 300;
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  position: relative;
 }
-
-/* Fine, even grain over the sky blue. A tiny SVG noise tile, kept very
-   faint, so the colour reads as a soft paper-like texture rather than a
-   flat fill. Fixed, so it never scrolls or shimmers. */
-body::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: .5;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .42  0 0 0 0 .52  0 0 0 .11 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  background-size: 180px 180px;
-}
-
 a{ color: inherit; text-decoration: none; }
-img{ max-width: 100%; display: block; }
-
-:focus-visible{ outline: 1.5px solid var(--ink); outline-offset: 3px; }
-
-.site-header, main, .site-footer{ position: relative; z-index: 1; }
-.site-header{ flex: none; }
-main{ flex: 1 0 auto; width: 100%; }
-.site-footer{ flex: none; }
+img{ display: block; max-width: 100%; }
+:focus-visible{ outline: 1.5px solid var(--ink); outline-offset: 4px; }
 
 /* ==========================================================================
-   HEADER — pure white, no rule. Instead of the old hairline, the white
-   melts gradually into the grainy blue along its whole lower edge.
+   HEADER — off-white bar that bleeds softly into the sky blue
    ========================================================================== */
 .site-header{
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
   height: var(--header-h);
   padding: 0 var(--pad);
-  background: var(--bg-header);
+  padding-top: env(safe-area-inset-top);
+  display: flex;
+  align-items: center;
+  background: var(--paper);
+  pointer-events: none;
 }
 .site-header::after{
   content: "";
   position: absolute;
-  left: 0; right: 0;
-  top: 100%;
-  height: var(--fade-h);
+  left: 0; right: 0; top: 100%;
+  height: var(--bleed-h);
   pointer-events: none;
-  /* many stops = a long, even, banding-free ease from white to clear */
+  /* long, eased fade from paper to clear */
   background: linear-gradient(to bottom,
-    rgba(255,255,255,1)    0%,
-    rgba(255,255,255,.86) 14%,
-    rgba(255,255,255,.68) 28%,
-    rgba(255,255,255,.49) 42%,
-    rgba(255,255,255,.32) 56%,
-    rgba(255,255,255,.18) 70%,
-    rgba(255,255,255,.08) 84%,
-    rgba(255,255,255,0)  100%);
+    rgba(251,250,246,1)    0%,
+    rgba(251,250,246,.94)  10%,
+    rgba(251,250,246,.83)  20%,
+    rgba(251,250,246,.69)  30%,
+    rgba(251,250,246,.54)  40%,
+    rgba(251,250,246,.40)  50%,
+    rgba(251,250,246,.28)  60%,
+    rgba(251,250,246,.17)  70%,
+    rgba(251,250,246,.09)  80%,
+    rgba(251,250,246,.03)  90%,
+    rgba(251,250,246,0)   100%);
 }
-
-.brand{ display: block; flex: 0 1 auto; min-width: 0; }
-.wordmark{
-  height: clamp(18px, 2.7vw, 34px);
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: left center;
-}
+.brand{ display: block; pointer-events: auto; }
+.brand img{ height: var(--brand-h); width: auto; }
 
 /* ==========================================================================
-   MAP — sits straight on the page, no frame. Europe's coastline as a fine
-   line fading out toward the edges; Vienna in red, destinations in black.
-   ========================================================================== */
-.home-main{
-  position: relative;
-  min-height: 340px;
-}
-.map-wrap{
-  position: absolute;
-  inset: calc(var(--fade-h) * .5) var(--pad) clamp(12px, 3vh, 32px);
-}
-.map{
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.map .coast{
-  fill: none;
-  stroke: var(--ink);
-  stroke-opacity: .42;
-  stroke-width: 1;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-  opacity: 0;
-  transition: opacity 1.6s cubic-bezier(.45,0,.25,1);
-}
-.map .coast.is-on{ opacity: 1; }
-
-.map .route-dot{
-  fill: var(--ink);
-  fill-opacity: .55;
-  opacity: 0;
-}
-.map.animate .route-dot{
-  animation: dot-in .5s ease-out both;   /* delay set per dot in js/map.js */
-}
-.map.static .route-dot{ opacity: 1; }
-@keyframes dot-in{ from{ opacity: 0 } to{ opacity: 1 } }
-
-.map .dest{ fill: var(--ink); }
-.map .home{ fill: var(--red); }
-.map .home-ring{
-  fill: none;
-  stroke: var(--red);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.map.animate .home-ring{ animation: ring 2.8s cubic-bezier(.2,.6,.3,1) .4s both; }
-@keyframes ring{
-  0%  { opacity: .7; transform: scale(1); }
-  100%{ opacity: 0;  transform: scale(4.5); }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .map .coast{ transition: none; }
-  .map.animate .route-dot, .map.animate .home-ring{ animation: none; }
-  .map.animate .route-dot{ opacity: 1; }
-}
-
-/* ==========================================================================
-   FOOTER — no rule, sits on the blue
+   FOOTER — e-mail left, place right, sits on the sky blue
    ========================================================================== */
 .site-footer{
-  padding: 22px var(--pad) 30px;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 50;
+  min-height: var(--footer-h);
+  padding: 0 var(--pad) env(safe-area-inset-bottom);
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 10px 24px;
-}
-.f-left{ display: flex; flex-wrap: wrap; gap: 18px; }
-.f-left a, .f-right{
+  gap: 8px 20px;
   font-size: .72rem;
+  line-height: 1.3;
   text-transform: uppercase;
   letter-spacing: .08em;
   color: var(--ink-soft);
+  background: var(--sky);
 }
-.f-left a:hover{ color: var(--ink); }
+.site-footer::before{          /* soft lip so page two fades under the footer */
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 100%;
+  height: 28px;
+  background: linear-gradient(to top, var(--sky), rgba(211,232,248,0));
+  pointer-events: none;
+}
+.site-footer a:hover{ color: var(--ink); }
 
-@media (max-width: 560px){
-  :root{ --header-h: 64px; }
+/* ==========================================================================
+   PAGES — two full-screen pages that snap
+   ========================================================================== */
+.page{
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  scroll-snap-align: start;
+}
+
+/* ---- page 1: map ---- */
+.page-map{
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+.page-map canvas{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.map-coast{
+  opacity: 0;
+  transition: opacity 2.2s cubic-bezier(.4,0,.2,1);
+  /* outlines run nearly to the edges, then dissolve */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 86%, transparent 100%);
+          mask-composite: intersect;
+}
+.map-coast.is-on{ opacity: 1; }
+.map-coast.is-late{ transition-duration: 1.2s; }
+
+.wien-label{
+  position: absolute;
+  left: 0; top: 0;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  line-height: 1;
+  color: var(--red);
+  opacity: 0;
+  transition: opacity .9s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.wien-label.is-on{ opacity: 1; }
+
+.map-tip{
+  position: absolute;
+  left: 0; top: 0;
+  font-size: 11px;
+  letter-spacing: .06em;
+  line-height: 1;
+  color: var(--ink);
+  background: rgba(251,250,246,.92);
+  padding: 5px 7px 4px;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity .15s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.map-tip.is-on{ opacity: 1; }
+
+/* ANFRAGEN — bottom centre of the map page, gently breathing */
+.cta{
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--footer-h) + env(safe-area-inset-bottom) + clamp(6px, 2.4vh, 26px));
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  color: var(--red);
+  font-weight: 700;
+  font-size: clamp(14px, calc(.35vw + 12px), 17px);
+  line-height: 1;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+}
+.cta-text{
+  display: block;
+  margin-right: -.26em;          /* cancel trailing tracking so it centres */
+  animation: breathe 2.8s ease-in-out infinite;
+}
+.cta-chev{
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: nudge 2.8s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%, 100%{ opacity: .58; transform: scale(1); }
+  50%     { opacity: 1;   transform: scale(1.045); }
+}
+@keyframes nudge{
+  0%, 100%{ opacity: .4; transform: translateY(0); }
+  50%     { opacity: 1;  transform: translateY(3px); }
+}
+
+/* ---- page 2: Anfragen ---- */
+.page-contact{
+  display: flex;
+  align-items: center;
+  padding:
+    calc(var(--header-h) + clamp(24px, 6vh, 72px)) var(--pad)
+    calc(var(--footer-h) + clamp(22px, 5vh, 56px));
+}
+.contact-grid{
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(40px, 8vw, 140px);
+  --pw: clamp(230px, min(24vw, 34vh), 340px);   /* photo width */
+}
+
+.eyebrow{
+  margin: 0 0 1.4em;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.lead{
+  margin: 0 0 1.1em;
+  max-width: 24em;
+  font-size: clamp(17px, calc(.4vw + 14px), 20px);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.lines{
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .3em;
+  font-size: clamp(19px, calc(.9vw + 11px), 27px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: .005em;
+}
+.lines a{
+  color: var(--ink);
+  background-image: linear-gradient(var(--red), var(--red));
+  background-size: 0 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: color .2s ease, background-size .3s ease;
+  padding-bottom: 2px;
+}
+.lines a:hover{ color: var(--red); background-size: 100% 1px; }
+
+.portrait{
+  margin: 0;
+  width: var(--pw);
+}
+.portrait picture{ display: block; }
+.portrait picture img{
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  height: auto;
+  object-fit: cover;
+  background: #c9dcea;
+}
+.portrait figcaption{ margin-top: 16px; }
+.portrait-name{ width: 100%; height: auto; }
+.portrait figcaption p{
+  margin: 14px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* short desktop screens: tighten page two */
+@media (min-width: 761px) and (max-height: 780px){
+  .contact-grid{ --pw: clamp(210px, min(22vw, 31vh), 300px); }
+  .portrait figcaption{ margin-top: 12px; }
+  .portrait figcaption p{ font-size: 13.5px; line-height: 1.55; margin-top: 10px; }
+  .page-contact{ padding-top: calc(var(--header-h) + 34px); padding-bottom: calc(var(--footer-h) + 18px); }
+}
+
+/* phones and narrow tablets: one column, contact first */
+@media (max-width: 760px){
+  :root{ --footer-h: 48px; --bleed-h: 64px; }
+  .site-footer{ font-size: .66rem; letter-spacing: .06em; }
+  .page-contact{
+    align-items: flex-start;
+    padding-top: calc(var(--header-h) + 40px);
+    padding-bottom: calc(var(--footer-h) + 28px);
+  }
+  .contact-grid{
+    grid-template-columns: 1fr;
+    gap: 34px;
+    --pw: min(62vw, 300px);
+  }
+  .eyebrow{ margin-bottom: 1em; font-size: .72rem; }
+  .lead{ font-size: 16.5px; margin-bottom: .8em; }
+  .lines{ font-size: 19px; }
+  .portrait{ width: 100%; }
+  .portrait picture, .portrait-name{ width: var(--pw); }
+  .portrait figcaption p{ font-size: 14.5px; max-width: 34em; }
+}
+@media (max-width: 760px) and (max-height: 700px){
+  .page-contact{ padding-top: calc(var(--header-h) + 26px); }
+  .contact-grid{ gap: 24px; --pw: min(50vw, 220px); }
+  .eyebrow{ margin-bottom: .7em; }
+  .portrait figcaption p{ font-size: 13.5px; line-height: 1.55; }
+}
+@media (max-width: 360px){
+  .site-footer{ font-size: .6rem; letter-spacing: .04em; }
+}
+
+/* ==========================================================================
+   INTRO — header, footer and ANFRAGEN appear once the routes arrive
+   ========================================================================== */
+.js .brand,
+.js .site-footer > *,
+.js .cta{
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+.js .cta{ transition-duration: .9s; }
+.chrome-in .brand,
+.chrome-in .site-footer > *{ opacity: 1; }
+.cta-in .cta{ opacity: 1; }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  .cta-text, .cta-chev{ animation: none; opacity: 1; }
+  .map-coast, .wien-label{ transition: none; }
 }
