@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2/land-50m.json" as="fetch" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=6">
 <script>
   // Mark JS as available before first paint, so the intro can start hidden.
   document.documentElement.className = 'js' +
@@ -25,7 +25,7 @@
 
 <header class="site-header">
   <a class="brand" href="#start" aria-label="Dušan Milojević, Busunternehmer – zum Anfang">
-    <img src="images/brand.svg?v=5" alt="Dušan Milojević Busunternehmer" width="899" height="153">
+    <img src="images/brand.svg?v=6" alt="Dušan Milojević Busunternehmer" width="899" height="153">
   </a>
 </header>
 
@@ -45,23 +45,37 @@
   <!-- Page 2: contact -->
   <section id="anfragen" class="page page-contact" aria-label="Anfragen">
     <div class="contact-grid">
+      <figure class="c-quote" aria-label="„Leben und leben lassen“ – Friedrich Schiller">
+        <svg viewBox="0 0 400 66" aria-hidden="true">
+          <path id="wave-a" d="M2 24 C 62 12 122 12 182 24 S 302 36 362 24" fill="none"/>
+          <path id="wave-b" d="M118 54 C 168 44 218 44 268 54 S 368 64 398 54" fill="none"/>
+          <text><textPath href="#wave-a">LEBEN UND LEBEN LASSEN</textPath></text>
+          <text><textPath href="#wave-b" startOffset="100%" text-anchor="end">– FRIEDRICH SCHILLER</textPath></text>
+        </svg>
+      </figure>
+
       <picture class="c-photo">
-        <source type="image/webp" srcset="images/dusan-milojevic-500.webp 500w, images/dusan-milojevic-900.webp 900w"
-                sizes="(max-width: 760px) 50vw, 360px">
-        <img src="images/dusan-milojevic-500.jpg"
-             srcset="images/dusan-milojevic-500.jpg 500w, images/dusan-milojevic-900.jpg 900w"
-             sizes="(max-width: 760px) 50vw, 360px"
-             width="500" height="750" decoding="async" alt="Dušan Milojević vor einer Flussschlucht">
+        <source media="(max-width: 760px), (max-aspect-ratio: 4/5)" type="image/webp"
+                srcset="images/dusan-milojevic-500.webp 500w, images/dusan-milojevic-900.webp 900w" sizes="50vw">
+        <source media="(max-width: 760px), (max-aspect-ratio: 4/5)"
+                srcset="images/dusan-milojevic-500.jpg 500w, images/dusan-milojevic-900.jpg 900w" sizes="50vw">
+        <source type="image/webp"
+                srcset="images/dusan-milojevic-sq-600.webp 600w, images/dusan-milojevic-sq-900.webp 900w, images/dusan-milojevic-sq-1200.webp 1200w"
+                sizes="440px">
+        <img src="images/dusan-milojevic-sq-600.jpg"
+             srcset="images/dusan-milojevic-sq-600.jpg 600w, images/dusan-milojevic-sq-900.jpg 900w, images/dusan-milojevic-sq-1200.jpg 1200w"
+             sizes="440px" width="600" height="600" decoding="async"
+             alt="Dušan Milojević vor einer Flussschlucht">
       </picture>
       <p class="c-name">Dušan Milojević</p>
       <p class="c-text">Wir verfügen über eigene, moderne Fahrzeuge und vermitteln darüber hinaus Fahrer sowie
         weitere Busse – für Reisen innerhalb Österreichs ebenso wie ins Ausland. Unsere Fahrzeuge bieten
         Platz für 20 bis 59 Fahrgäste und Komfort für jede Strecke – ob Tagesausflug, Klassenfahrt oder Fernreise.</p>
       <p class="c-ask">Für <strong>Anfragen</strong>, <strong>Buchungen</strong> und <strong>Informationen</strong> erreichen Sie uns unter:</p>
-      <p class="c-lines">
-        <a href="mailto:info@dusanmilojevic.com">info@dusanmilojevic.com</a>
-        <a href="tel:+4366473457038">+43 664 73457038</a>
-      </p>
+      <div class="c-lines">
+        <div class="c-item"><span class="c-label">E-Mail</span><a href="mailto:info@dusanmilojevic.com">info@dusanmilojevic.com</a></div>
+        <div class="c-item"><span class="c-label">Telefon</span><a href="tel:+4366473457038">+43 664 73457038</a></div>
+      </div>
     </div>
   </section>
 </main>
@@ -71,7 +85,7 @@
   <span>Wien, Österreich</span>
 </footer>
 
-<script src="js/map.js?v=5" defer></script>
-<script src="js/site.js?v=5" defer></script>
+<script src="js/map.js?v=6" defer></script>
+<script src="js/site.js?v=6" defer></script>
 </body>
 </html>

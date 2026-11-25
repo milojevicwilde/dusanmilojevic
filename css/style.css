@@ -232,12 +232,15 @@ img{ display: block; max-width: 100%; }
 
 /* ==========================================================================
    PAGE 2 — Anfragen
-   Desktop:  [ask text             ] [photo  ]
-             ------- rule -------    [caption]
-             [email  phone         ] [text   ]
-   The rule sits at the height of the photo's lower edge, from the start of
-   the header lettering to just short of the photo. The photo is never
-   cropped; js/site.js sizes it so the whole page fits the screen.
+   Desktop:  [quote, on a wave    ] [photo  ]
+             [ask text            ] [       ]
+             ------- rule -------   [caption]
+             E-MAIL / address       [text   ]   photo + caption + text = one block
+             ------------------
+             TELEFON / number
+             ------------------
+   The rule sits at the height of the photo's lower edge. js/site.js sizes
+   the photo (and the text under it, same width) so the page fits the screen.
    ========================================================================== */
 .page-contact{
   display: flex;
@@ -248,16 +251,16 @@ img{ display: block; max-width: 100%; }
     calc(var(--footer-h) + clamp(14px, 4vh, 44px));
 }
 .contact-grid{
-  --tw: clamp(280px, 27vw, 400px);   /* text column under the photo */
-  --pw: var(--tw);                   /* photo width; reduced by JS on short screens */
+  --pw: clamp(280px, 30vw, 460px);   /* photo + text block width; set by JS */
   --s:  clamp(20px, 2.3vw, 34px);    /* one spacing for rule, text and photo */
   --fs: clamp(14.5px, calc(.25vw + 12.5px), 16.5px);
   --lh: 1.62;
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--tw);
-  grid-template-rows: auto auto auto;
+  grid-template-columns: minmax(0, 1fr) var(--pw);
+  grid-template-rows: 1fr auto auto auto;
   grid-template-areas:
+    "quote photo"
     "ask   photo"
     "lines name"
     "lines text";
@@ -265,7 +268,29 @@ img{ display: block; max-width: 100%; }
   font-size: var(--fs);
   line-height: 1.6;
 }
-.c-photo{ grid-area: photo; display: block; width: var(--pw); }
+
+/* quote on a gentle wave, footer style but at text size */
+.c-quote{
+  grid-area: quote;
+  align-self: center;
+  margin: 0 0 var(--s);
+}
+.c-quote svg{
+  display: block;
+  width: calc(var(--fs) * 25);        /* 400 units at 16 units per text size */
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.c-quote text{
+  font-family: var(--f-body);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 1.3px;
+  fill: var(--ink-soft);
+}
+
+.c-photo{ grid-area: photo; display: block; }
 .c-photo img{
   width: 100%;
   height: auto;
@@ -300,31 +325,39 @@ img{ display: block; max-width: 100%; }
   text-wrap: balance;
 }
 .c-ask strong{ font-weight: 600; color: var(--ink); }
+
+/* contacts: label in footer style, value in red at text size */
 .c-lines{
   grid-area: lines;
   align-self: start;
-  margin: 0;
-  padding-top: var(--s);
   border-top: 1px solid var(--rule);
+}
+.c-item{
   display: flex;
-  flex-wrap: wrap;
-  gap: .4em 2.4em;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .35em;
+  padding: calc(var(--s) * .72) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.c-label{
   font-size: .72rem;
   line-height: 1.3;
-  letter-spacing: .04em;
-  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
 }
-.c-lines a{
+.c-item a{
   color: var(--red);
+  line-height: 1.35;
   white-space: nowrap;
   background-image: linear-gradient(var(--red), var(--red));
   background-size: 0 1px;
   background-repeat: no-repeat;
   background-position: 0 100%;
   transition: background-size .3s ease;
-  padding-bottom: 2px;
 }
-.c-lines a:hover{ background-size: 100% 1px; }
+.c-item a:hover{ background-size: 100% 1px; }
 
 /* short desktop screens */
 @media (min-width: 761px) and (min-aspect-ratio: 4/5) and (max-height: 800px){
@@ -333,35 +366,47 @@ img{ display: block; max-width: 100%; }
 }
 
 /* phones and portrait tablets:
-   [photo] [text, filling the photo's height]
-   [caption]
-   ask text / rule / email  phone                                           */
+   quote
+   [photo, left half] [text, filling the photo's height]
+   caption
+   ask text / rule / contacts                                              */
 @media (max-width: 760px), (max-aspect-ratio: 4/5){
   :root{ --footer-h: 48px; --bleed-h: 60px; --text-x: var(--pad); }
   .site-footer{ font-size: .66rem; letter-spacing: .06em; }
   .page-contact{
-    padding-top: calc(var(--header-h) + var(--bleed-h) * .8 + clamp(0px, 1.5vh, 20px));
-    padding-bottom: calc(var(--footer-h) + clamp(8px, 2vh, 28px));
+    padding-top: calc(var(--header-h) + var(--bleed-h) * .7 + clamp(0px, 1vh, 16px));
+    padding-bottom: calc(var(--footer-h) + clamp(8px, 1.6vh, 24px));
   }
   .contact-grid{
-    --pw: 44vw;                        /* set by JS so text height = photo height */
-    --s:  clamp(18px, 2.8vh, 32px);
+    --pw: 50%;                         /* set by JS: about half the width */
+    --s:  clamp(14px, 2.4vh, 30px);
     --fs: clamp(13px, calc(1vw + 9.2px), 17px);
     --lh: 1.5;
     grid-template-columns: var(--pw) minmax(0, 1fr);
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
+      "quote quote"
       "photo text"
       "name  ."
       "ask   ask"
       "lines lines";
     column-gap: clamp(14px, 4vw, 28px);
   }
-  .c-photo{ width: auto; }
+  .c-quote{ margin: 0 0 clamp(14px, 2.6vh, 32px); }
   .c-name{ margin-top: 7px; font-size: .68rem; }
   .c-text{ margin: -.28em 0 0; }
-  .c-ask{ margin-top: clamp(34px, 6.5vh, 72px); }
-  .c-lines{ font-size: .7rem; gap: .4em 1.8em; }
+  .c-ask{ margin-top: clamp(24px, 4.5vh, 60px); padding-bottom: calc(var(--s) * .9); }
+  .c-label{ font-size: .66rem; }
+  .c-item{ padding: calc(var(--s) * .6) 0; }
+  /* compact (set by JS on short phones): both contacts side by side */
+  .contact-grid.is-compact .c-lines{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    column-gap: 2.4em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .contact-grid.is-compact .c-item{ border-bottom: 0; }
 }
 @media (max-width: 360px){
   .site-footer{ font-size: .6rem; letter-spacing: .04em; }

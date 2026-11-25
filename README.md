@@ -12,7 +12,8 @@ js/site.js                 Page swipe (wheel, touch, keys, ANFRAGEN link – all
 images/brand.svg           Header: logo + "Dušan Milojević / Busunternehmer" block
 images/logo.svg            Logo on its own
 images/favicon.svg, apple-touch-icon.png
-images/dusan-milojevic-*    Portrait, full uncropped photo, two sizes
+images/dusan-milojevic-sq-*  Portrait, square crop (desktop)
+images/dusan-milojevic-500/900  Portrait, full 2:3 photo (phones)
 ```
 
 ## Editing
