@@ -69,6 +69,64 @@
     window.scrollTo(0, 0); pages.scrollTop = 0;
   });
 
+  // ---- page 2 sizing: photo is never cropped, page never scrolls ----
+  // Desktop: photo as wide as the text column, made smaller only if photo +
+  //          caption + text would not fit the screen height.
+  // Phones:  photo grows until the text beside it is no taller than the photo,
+  //          then the line spacing opens slightly so the text fills its height.
+  var grid = p2.querySelector('.contact-grid');
+  var photo = p2.querySelector('.c-photo img');
+  var text = p2.querySelector('.c-text');
+  var cap = p2.querySelector('.c-name');
+  var mobileMQ = window.matchMedia('(max-width: 760px), (max-aspect-ratio: 4/5)');
+  var RATIO = 1.5;   // photo height / width (500 x 750)
+
+  function px(v) { return parseFloat(v) || 0; }
+  function fitPage2() {
+    if (!grid) return;
+    grid.style.removeProperty('--pw');
+    grid.style.removeProperty('--lh');
+    grid.style.removeProperty('--fs');
+    var cs = getComputedStyle(p2);
+    var availH = p2.clientHeight - px(cs.paddingTop) - px(cs.paddingBottom);
+
+    if (!mobileMQ.matches) {
+      var tw = text.getBoundingClientRect().width;
+      var below = cap.offsetHeight + px(getComputedStyle(cap).marginTop) +
+                  text.offsetHeight + px(getComputedStyle(text).marginTop);
+      var pw = Math.min(tw, (availH - below - 4) / RATIO);
+      grid.style.setProperty('--pw', Math.max(150, pw).toFixed(1) + 'px');
+      return;
+    }
+
+    var gw = grid.clientWidth;
+    var gap = px(getComputedStyle(grid).columnGap);
+    var fs = px(getComputedStyle(grid).fontSize);
+    for (var round = 0; round < 6; round++) {
+      // smallest photo width at which the text is no taller than the photo
+      var lo = gw * 0.30, hi = gw * 0.58;
+      for (var i = 0; i < 9; i++) {
+        var mid = (lo + hi) / 2;
+        grid.style.setProperty('--pw', mid.toFixed(1) + 'px');
+        if (text.offsetHeight <= mid * RATIO) hi = mid; else lo = mid;
+      }
+      grid.style.setProperty('--pw', hi.toFixed(1) + 'px');
+      // open the line spacing a touch so the text fills the photo height
+      var base = 1.5, th = text.offsetHeight, target = hi * RATIO;
+      var lh = Math.min(1.78, base * target / th);
+      grid.style.setProperty('--lh', lh.toFixed(3));
+      if (grid.offsetHeight <= availH || fs <= 11.5) break;
+      fs -= 0.5;                                   // very small screens: step the text down
+      grid.style.setProperty('--fs', fs + 'px');
+      grid.style.removeProperty('--lh');
+    }
+  }
+  fitPage2();
+  if (photo && !photo.complete) photo.addEventListener('load', fitPage2);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPage2);
+  var ft;
+  window.addEventListener('resize', function () { clearTimeout(ft); ft = setTimeout(fitPage2, 100); });
+
   // ---- in-page links (#anfragen, #start) ----
   document.querySelectorAll('a[href="#anfragen"], a[href="#start"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
