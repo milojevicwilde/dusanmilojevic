@@ -273,6 +273,7 @@ img{ display: block; max-width: 100%; }
 .c-quote{
   grid-area: quote;
   align-self: center;
+  justify-self: center;              /* centred in the free space left of the photo */
   margin: 0 0 var(--s);
 }
 .c-quote svg{
@@ -281,17 +282,19 @@ img{ display: block; max-width: 100%; }
   height: auto;
   overflow: visible;
 }
-.c-quote .q-wide{ width: calc(var(--fs) * 32.5); }   /* 520 units, 16 units = text size */
-.c-quote .q-narrow{ display: none; width: calc(var(--fs) * 25); }
+.c-quote .q-wide{ width: calc(var(--fs) * 38.75); }  /* 620 units, 16 units = text size */
+.c-quote .q-narrow{ display: none; width: 100%; }
 .c-quote text{
   font-family: var(--f-body);
   font-size: 16px;
   font-weight: 300;
   fill: var(--ink-soft);
 }
-.c-quote .q-wide .q-main{ letter-spacing: 3px; }
-.c-quote .q-narrow .q-main{ letter-spacing: 1.4px; }
-.c-quote .q-by{ letter-spacing: .6px; }
+.c-quote .q-wide .q-main{ letter-spacing: 4.2px; }
+.c-quote .q-wide .q-by{ letter-spacing: 1px; }
+.c-quote .q-narrow text{ font-size: 15px; }
+.c-quote .q-narrow .q-main{ letter-spacing: 1.2px; }
+.c-quote .q-narrow .q-by{ letter-spacing: .3px; }
 
 .c-photo{ grid-area: photo; display: block; }
 .c-photo img{
@@ -333,15 +336,19 @@ img{ display: block; max-width: 100%; }
 .c-lines{
   grid-area: lines;
   align-self: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--s);
   border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
 }
 .c-item{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: .35em;
+  min-width: 0;
   padding: calc(var(--s) * .72) 0;
-  border-bottom: 1px solid var(--rule);
 }
 .c-label{
   font-size: .72rem;
@@ -397,7 +404,7 @@ img{ display: block; max-width: 100%; }
     --cg: clamp(14px, 4vw, 28px);
     column-gap: var(--cg);
   }
-  .c-quote{ margin: -6px 0 clamp(16px, 3.6vh, 40px); }
+  .c-quote{ margin: -6px 0 clamp(16px, 3.6vh, 40px); justify-self: stretch; }
   .c-quote .q-wide{ display: none; }
   .c-quote .q-narrow{ display: block; }
   .c-name{ margin-top: 7px; font-size: .68rem; }

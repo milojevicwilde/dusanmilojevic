@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/world-atlas@2/land-50m.json" as="fetch" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=7">
+<link rel="stylesheet" href="css/style.css?v=8">
 <script>
   // Mark JS as available before first paint, so the intro can start hidden.
   document.documentElement.className = 'js' +
@@ -46,19 +46,15 @@
   <section id="anfragen" class="page page-contact" aria-label="Anfragen">
     <div class="contact-grid">
       <figure class="c-quote" aria-label="„Leben und leben lassen.“ – Friedrich Schiller">
-        <!-- desktop: wider, tilted waves -->
-        <svg class="q-wide" viewBox="0 0 520 104" aria-hidden="true">
-          <path id="qw-a" d="M4 60 C 90 32 170 30 250 44 S 410 52 504 18" fill="none"/>
-          <path id="qw-b" d="M196 100 C 266 80 336 76 406 86 S 490 84 518 66" fill="none"/>
-          <text class="q-main"><textPath href="#qw-a">„LEBEN UND LEBEN LASSEN.“</textPath></text>
-          <text class="q-by"><textPath href="#qw-b" startOffset="100%" text-anchor="end">– Friedrich Schiller</textPath></text>
+        <!-- desktop: one playful curve, quote and name on it -->
+        <svg class="q-wide" viewBox="0 0 620 86" aria-hidden="true">
+          <path id="qw" d="M6 56 C 88 22 170 20 248 40 S 404 76 482 52 S 590 16 614 28" fill="none"/>
+          <text text-anchor="middle"><textPath href="#qw" startOffset="50%"><tspan class="q-main">„LEBEN UND LEBEN LASSEN.“</tspan><tspan class="q-by" dx="13">– Friedrich Schiller</tspan></textPath></text>
         </svg>
-        <!-- phones: compact waves -->
-        <svg class="q-narrow" viewBox="0 0 400 74" aria-hidden="true">
-          <path id="qn-a" d="M2 22 C 62 10 122 10 182 22 S 302 34 362 22" fill="none"/>
-          <path id="qn-b" d="M150 64 C 196 54 242 54 288 62 S 372 70 398 60" fill="none"/>
-          <text class="q-main"><textPath href="#qn-a">„LEBEN UND LEBEN LASSEN.“</textPath></text>
-          <text class="q-by"><textPath href="#qn-b" startOffset="100%" text-anchor="end">– Friedrich Schiller</textPath></text>
+        <!-- phones: same idea, narrower -->
+        <svg class="q-narrow" viewBox="0 0 440 66" aria-hidden="true">
+          <path id="qn" d="M4 44 C 64 18 128 16 192 32 S 316 58 372 40 S 428 20 436 24" fill="none"/>
+          <text text-anchor="middle"><textPath href="#qn" startOffset="50%"><tspan class="q-main">„LEBEN UND LEBEN LASSEN.“</tspan><tspan class="q-by" dx="9">– Friedrich Schiller</tspan></textPath></text>
         </svg>
       </figure>
 
