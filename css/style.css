@@ -258,11 +258,10 @@ img{ display: block; max-width: 100%; }
   width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--pw);
-  grid-template-rows: 1fr auto auto auto;
+  grid-template-rows: 1fr auto auto;
   grid-template-areas:
     "quote photo"
     "ask   photo"
-    "lines name"
     "lines text";
   column-gap: var(--s);
   font-size: var(--fs);
@@ -314,7 +313,7 @@ img{ display: block; max-width: 100%; }
 .c-text{
   grid-area: text;
   align-self: start;
-  margin: 12px 0 0;
+  margin: 16px 0 0;
   line-height: var(--lh);
   color: var(--ink-2);
   hyphens: manual;
@@ -394,11 +393,10 @@ img{ display: block; max-width: 100%; }
     --fs: clamp(13px, calc(1vw + 9.2px), 17px);
     --lh: 1.5;
     grid-template-columns: var(--pw) minmax(0, 1fr);
-    grid-template-rows: auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "quote quote"
       "photo text"
-      "name  ."
       "ask   ask"
       "lines lines";
     --cg: clamp(14px, 4vw, 28px);
